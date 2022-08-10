@@ -11,7 +11,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={Router.CreateEmployee} element={<CurrentEmployeesPage />} />
+        <Route path={Router.CurrentEmployees} element={<CurrentEmployeesPage />} />
+        <Route path={Router.CreateEmployee} element={<CreateEmployeePage />} />
         <Route index element={<CreateEmployeePage />} />
       </Routes>
     </BrowserRouter>

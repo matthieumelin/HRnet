@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 // router
 import { Link } from "react-router-dom";
 import { Router } from "../router/Routes";
+
+// modal
+import Modal from "@matthieumelin/mm-react-modal";
 
 // styled
 import styled from "styled-components";
@@ -12,44 +16,113 @@ import { States } from "../data/States";
 import { Departments } from "../data/Departments";
 
 export default function CreateEmployeePage() {
+  const [newEmployee, setNewEmployee] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const createNewEmployee = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <StyledCreateEmployeePage>
-      <Title>HRnet</Title>
       <Main>
+        <MainTitle>HRnet</MainTitle>
         <Container>
           <Link to={Router.CurrentEmployees}>View Current Employees</Link>
           <SubTitle>Create Employee</SubTitle>
           <Form>
             <FormGroup>
               <FormLabel htmlFor="first-name">First Name</FormLabel>
-              <FormInput type="text" id="first-name" />
+              <FormInput
+                type="text"
+                id="first-name"
+                onChange={(event) =>
+                  setNewEmployee({
+                    ...newEmployee,
+                    firstName: event.target.value,
+                  })
+                }
+              />
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="last-name">Last Name</FormLabel>
-              <FormInput type="text" id="last-name" />
+              <FormInput
+                type="text"
+                id="last-name"
+                onChange={(event) =>
+                  setNewEmployee({
+                    ...newEmployee,
+                    lastName: event.target.value,
+                  })
+                }
+              />
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="date-of-birth">Date of Birth</FormLabel>
-              <FormInput type="text" id="date-of-birth" />
+              <FormInput
+                type="text"
+                id="date-of-birth"
+                onChange={(event) =>
+                  setNewEmployee({
+                    ...newEmployee,
+                    dateOfBirth: event.target.value,
+                  })
+                }
+              />
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="start-date">Start Date</FormLabel>
-              <FormInput type="text" id="start-date" />
+              <FormInput
+                type="text"
+                id="start-date"
+                onChange={(event) =>
+                  setNewEmployee({
+                    ...newEmployee,
+                    startDate: event.target.value,
+                  })
+                }
+              />
             </FormGroup>
             <FormGroup>
               <FormFieldSet>
                 <FormFieldSetLegend>Address</FormFieldSetLegend>
                 <FormGroup>
                   <FormLabel htmlFor="street">Street</FormLabel>
-                  <FormInput type="text" id="street" />
+                  <FormInput
+                    type="text"
+                    id="street"
+                    onChange={(event) =>
+                      setNewEmployee({
+                        ...newEmployee,
+                        street: event.target.value,
+                      })
+                    }
+                  />
                 </FormGroup>
                 <FormGroup>
                   <FormLabel htmlFor="city">City</FormLabel>
-                  <FormInput type="text" id="city" />
+                  <FormInput
+                    type="text"
+                    id="city"
+                    onChange={(event) =>
+                      setNewEmployee({
+                        ...newEmployee,
+                        city: event.target.value,
+                      })
+                    }
+                  />
                 </FormGroup>
                 <FormGroup>
                   <FormLabel htmlFor="state">State</FormLabel>
-                  <FormSelect id="state">
+                  <FormSelect
+                    id="state"
+                    onChange={(event) =>
+                      setNewEmployee({
+                        ...newEmployee,
+                        city: event.target.value,
+                      })
+                    }
+                  >
                     {States.map((state, key) => {
                       return (
                         <FormSelectOption key={key}>
@@ -61,12 +134,29 @@ export default function CreateEmployeePage() {
                 </FormGroup>
                 <FormGroup>
                   <FormLabel htmlFor="zip-code">Zip Code</FormLabel>
-                  <FormInput type="number" id="zip-code" />
+                  <FormInput
+                    type="number"
+                    id="zip-code"
+                    onChange={(event) =>
+                      setNewEmployee({
+                        ...newEmployee,
+                        zipCode: event.target.value,
+                      })
+                    }
+                  />
                 </FormGroup>
               </FormFieldSet>
               <FormGroup>
                 <FormLabel htmlFor="department">Department</FormLabel>
-                <FormSelect>
+                <FormSelect
+                  id="department"
+                  onChange={(event) =>
+                    setNewEmployee({
+                      ...newEmployee,
+                      department: event.target.value,
+                    })
+                  }
+                >
                   {Departments.map((department, key) => {
                     return (
                       <FormSelectOption key={key}>
@@ -78,22 +168,47 @@ export default function CreateEmployeePage() {
               </FormGroup>
             </FormGroup>
             <FormGroup>
-              <Button>Save</Button>
+              <Button onClick={(event) => createNewEmployee(event)}>
+                Save
+              </Button>
             </FormGroup>
           </Form>
         </Container>
+        <Modal
+          customCloseButton={{
+            position: "absolute",
+            right: -10,
+            top: -10,
+            width: 20,
+            height: 20,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 15,
+            borderRadius: 100,
+          }}
+          customMessage={{ textAlign: "center", width: "100%" }}
+          customContainer={{ position: "relative", height: 50, width: 400 }}
+          message={"Employee Created!"}
+          isOpen={modalIsOpen}
+          onConfirm={() => setModalIsOpen(!modalIsOpen)}
+        />
       </Main>
     </StyledCreateEmployeePage>
   );
 }
 
+CreateEmployeePage.propTypes = {
+  createNewEmployee: PropTypes.func,
+};
+
 const StyledCreateEmployeePage = styled.div``;
-const Title = styled.h1`
+const Main = styled.main``;
+const MainTitle = styled.h1`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-const Main = styled.main``;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
