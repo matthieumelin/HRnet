@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
-// router
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Router } from "./router/Routes";
-// pages
+
 import CreateEmployeePage from "./pages/CreateEmployeePage";
 import CurrentEmployeesPage from "./pages/CurrentEmployeesPage";
 
+import { initEmployees } from "./data/mock/mockEmployees";
+
 export default function App() {
+  const [employees, setEmployees] = useState(initEmployees);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={Router.CurrentEmployees} element={<CurrentEmployeesPage />} />
-        <Route path={Router.CreateEmployee} element={<CreateEmployeePage />} />
-        <Route index element={<CreateEmployeePage />} />
+        <Route path={Router.CurrentEmployees} element={<CurrentEmployeesPage employees={employees} />} />
+        <Route path={Router.CreateEmployee} element={<CreateEmployeePage employees={employees} setEmployees={setEmployees} />} />
+        <Route index element={<CreateEmployeePage employees={employees} setEmployees={setEmployees} />} />
       </Routes>
     </BrowserRouter>
   );

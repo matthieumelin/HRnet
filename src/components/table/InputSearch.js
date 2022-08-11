@@ -3,8 +3,19 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
-export default function InputSearch() {
+export default function InputSearch({ onSetInput }) {
   const [value, setValue] = useState("");
+
+  const splitInputToArray = (input) => {
+    return input.split(" ");
+  };
+
+  const handleInput = (event) => {
+    const value = event.target.value;
+    setValue(value);
+    onSetInput(splitInputToArray(value));
+  };
+
   return (
     <StyledInputSearch>
       <InputSearchLabel htmlFor="search">Search:</InputSearchLabel>
@@ -13,11 +24,15 @@ export default function InputSearch() {
         id="search"
         name="Search"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => handleInput(event)}
       />
     </StyledInputSearch>
   );
 }
+
+InputSearch.propTypes = {
+  onSetInput: PropTypes.func,
+};
 
 const StyledInputSearch = styled.div``;
 const InputSearchLabel = styled.label`

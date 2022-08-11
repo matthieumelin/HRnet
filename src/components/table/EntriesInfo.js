@@ -19,9 +19,9 @@ export default function EntriesInfo({
     : startIndex + 1;
   const amountOfEntries = isFiltered ? filteredListLength : listLength;
   const endIndexText =
-    startIndex + 1 + maxEntriesAmount + 1 >= amountOfEntries
+    +startIndex + +maxEntriesAmount >= amountOfEntries
       ? amountOfEntries
-      : startIndex + 1 + maxEntriesAmount + 1;
+      : +startIndex + +maxEntriesAmount;
   const amountOfEntriesTotal = listLength;
 
   return (

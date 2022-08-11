@@ -15,12 +15,45 @@ import styled from "styled-components";
 import { States } from "../data/States";
 import { Departments } from "../data/Departments";
 
-export default function CreateEmployeePage() {
-  const [newEmployee, setNewEmployee] = useState({});
+import DateTimePicker from "react-datetime-picker";
+
+export default function CreateEmployeePage({ employees, setEmployees }) {
+  const defaultNewEmployee = {
+    firstName: "",
+    lastName: "",
+    startDate: "",
+    department: "Sales",
+    dateOfBirth: "",
+    street: "",
+    city: "",
+    state: "US",
+    zipCode: "",
+  };
+  const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const createNewEmployee = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
+
+    if (Object.keys(newEmployee).length > 0) {
+      const newList = employees;
+      const newEmployeeData = {
+        id: employees.length,
+        firstName: newEmployee.firstName,
+        lastName: newEmployee.lastName,
+        startDate: newEmployee.startDate,
+        department: newEmployee.department,
+        dateOfBirth: newEmployee.dateOfBirth,
+        street: newEmployee.street,
+        city: newEmployee.city,
+        state: newEmployee.state,
+        zipCode: newEmployee.zipCode,
+      };
+      newList.push(newEmployeeData);
+      setEmployees(newList);
+      setModalIsOpen(!modalIsOpen);
+      setNewEmployee(defaultNewEmployee);
+    }
   };
 
   return (
@@ -30,12 +63,13 @@ export default function CreateEmployeePage() {
         <Container>
           <Link to={Router.CurrentEmployees}>View Current Employees</Link>
           <SubTitle>Create Employee</SubTitle>
-          <Form>
+          <Form onSubmit={(event) => onSubmit(event)}>
             <FormGroup>
               <FormLabel htmlFor="first-name">First Name</FormLabel>
               <FormInput
                 type="text"
                 id="first-name"
+                value={newEmployee.firstName}
                 onChange={(event) =>
                   setNewEmployee({
                     ...newEmployee,
@@ -49,6 +83,7 @@ export default function CreateEmployeePage() {
               <FormInput
                 type="text"
                 id="last-name"
+                value={newEmployee.lastName}
                 onChange={(event) =>
                   setNewEmployee({
                     ...newEmployee,
@@ -59,9 +94,10 @@ export default function CreateEmployeePage() {
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="date-of-birth">Date of Birth</FormLabel>
-              <FormInput
-                type="text"
-                id="date-of-birth"
+              <DateTimePicker
+                format="y-MM-dd"
+                disableClock={true}
+                value={newEmployee.dateOfBirth}
                 onChange={(event) =>
                   setNewEmployee({
                     ...newEmployee,
@@ -72,9 +108,11 @@ export default function CreateEmployeePage() {
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="start-date">Start Date</FormLabel>
-              <FormInput
-                type="text"
-                id="start-date"
+              <DateTimePicker
+                format="y-MM-dd"
+                disableClock={true}
+                maxDate={new Date()}
+                value={newEmployee.startDate}
                 onChange={(event) =>
                   setNewEmployee({
                     ...newEmployee,
@@ -91,6 +129,7 @@ export default function CreateEmployeePage() {
                   <FormInput
                     type="text"
                     id="street"
+                    value={newEmployee.street}
                     onChange={(event) =>
                       setNewEmployee({
                         ...newEmployee,
@@ -104,6 +143,7 @@ export default function CreateEmployeePage() {
                   <FormInput
                     type="text"
                     id="city"
+                    value={newEmployee.city}
                     onChange={(event) =>
                       setNewEmployee({
                         ...newEmployee,
@@ -116,6 +156,7 @@ export default function CreateEmployeePage() {
                   <FormLabel htmlFor="state">State</FormLabel>
                   <FormSelect
                     id="state"
+                    value={newEmployee.state}
                     onChange={(event) =>
                       setNewEmployee({
                         ...newEmployee,
@@ -137,6 +178,7 @@ export default function CreateEmployeePage() {
                   <FormInput
                     type="number"
                     id="zip-code"
+                    value={newEmployee.zipCode}
                     onChange={(event) =>
                       setNewEmployee({
                         ...newEmployee,
@@ -150,6 +192,7 @@ export default function CreateEmployeePage() {
                 <FormLabel htmlFor="department">Department</FormLabel>
                 <FormSelect
                   id="department"
+                  value={newEmployee.department}
                   onChange={(event) =>
                     setNewEmployee({
                       ...newEmployee,
@@ -168,9 +211,7 @@ export default function CreateEmployeePage() {
               </FormGroup>
             </FormGroup>
             <FormGroup>
-              <Button onClick={(event) => createNewEmployee(event)}>
-                Save
-              </Button>
+              <Button type="submit">Save</Button>
             </FormGroup>
           </Form>
         </Container>
@@ -179,8 +220,8 @@ export default function CreateEmployeePage() {
             position: "absolute",
             right: -10,
             top: -10,
-            width: 20,
-            height: 20,
+            width: 15,
+            height: 15,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -199,7 +240,21 @@ export default function CreateEmployeePage() {
 }
 
 CreateEmployeePage.propTypes = {
-  createNewEmployee: PropTypes.func,
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      startDate: PropTypes.string,
+      department: PropTypes.string,
+      dateOfBirth: PropTypes.string,
+      street: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+      zipCode: PropTypes.string,
+    })
+  ),
+  setEmployees: PropTypes.func,
 };
 
 const StyledCreateEmployeePage = styled.div``;
