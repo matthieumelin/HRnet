@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Router } from "./router/Routes";
@@ -6,18 +6,25 @@ import { Router } from "./router/Routes";
 import CreateEmployeePage from "./pages/CreateEmployeePage";
 import CurrentEmployeesPage from "./pages/CurrentEmployeesPage";
 
-import { initEmployees } from "./data/mock/mockEmployees";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
-  const [employees, setEmployees] = useState(initEmployees);
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={Router.CurrentEmployees} element={<CurrentEmployeesPage employees={employees} />} />
-        <Route path={Router.CreateEmployee} element={<CreateEmployeePage employees={employees} setEmployees={setEmployees} />} />
-        <Route index element={<CreateEmployeePage employees={employees} setEmployees={setEmployees} />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={Router.CurrentEmployees}
+            element={<CurrentEmployeesPage />}
+          />
+          <Route
+            path={Router.CreateEmployee}
+            element={<CreateEmployeePage />}
+          />
+          <Route index element={<CreateEmployeePage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }

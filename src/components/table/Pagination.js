@@ -21,7 +21,11 @@ const generatePageButtonList = (pageAmount, actualPage) => {
   }
 };
 
-export default function Pagination(maxEntriesAmount, listLength, onSetPage) {
+export default function Pagination({
+  maxEntriesAmount,
+  listLength,
+  onSetPage,
+}) {
   const [page, setPage] = useState(1);
   const amountOfPage =
     listLength > maxEntriesAmount
@@ -38,6 +42,7 @@ export default function Pagination(maxEntriesAmount, listLength, onSetPage) {
     <StyledPagination>
       {page > 1 ? (
         <PaginationButton
+          disabled={page === 1 ? true : false}
           onClick={() => {
             const previousPage = page > 1 ? page - 1 : page;
             setPage(previousPage);
@@ -47,9 +52,10 @@ export default function Pagination(maxEntriesAmount, listLength, onSetPage) {
           Previous
         </PaginationButton>
       ) : null}
-      {pageButtons.filter((value) => value !== "...").map((value, index) => {
+      {pageButtons.map((value, index) => {
         return (
           <PaginationButton
+            disabled={value === "..." ? true : false}
             key={index + 1}
             onClick={() => {
               setPage(value);
@@ -62,6 +68,7 @@ export default function Pagination(maxEntriesAmount, listLength, onSetPage) {
       })}
       {page < amountOfPage ? (
         <PaginationButton
+          disabled={page === amountOfPage ? true : false}
           onClick={() => {
             const nextPage = page < amountOfPage ? page + 1 : page;
             setPage(nextPage);

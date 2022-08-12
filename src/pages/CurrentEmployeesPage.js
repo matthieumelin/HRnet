@@ -11,12 +11,12 @@ import Table from "../components/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-export default function CurrentEmployeesPage({ employees }) {
+export default function CurrentEmployeesPage() {
   return (
     <StyledCurrentEmployees>
       <Main>
         <MainTitle>Current Employees</MainTitle>
-        <Table employees={employees} />
+        <Table />
         <NavLink to={Router.CreateEmployee}>
           <FontAwesomeIcon icon={faHome} />
           Home

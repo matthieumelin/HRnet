@@ -12,6 +12,8 @@ import styled from "styled-components";
 
 import { employeeAttributes } from "../data/EmployeeAttributes";
 
+import { useSelector } from "react-redux";
+
 const itemMatchesFilter = (employee, word) => {
   let res = false;
   Object.keys(employee).some((key) => {
@@ -49,7 +51,8 @@ const listSorting = (a, b, attribute, order) => {
   return res === 0 ? res : order ? res : -res;
 };
 
-export default function Table({ employees }) {
+export default function Table() {
+  const employees = useSelector((state) => state.employees.employees);
   const [filter, setFilter] = useState([""]);
   const [sorterAttribute, setSorterAttribute] = useState("firstName");
   const [sorterOrder, setSorterOrder] = useState(true);
@@ -129,5 +132,7 @@ Table.defaultProps = {
 
 const StyledTable = styled.div``;
 const TableAside = styled.div``;
-const TableContainer = styled.table``;
+const TableContainer = styled.table`
+overflow-x:auto;
+`;
 const TableBody = styled.tbody``;

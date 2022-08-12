@@ -17,8 +17,12 @@ import { Departments } from "../data/Departments";
 
 import DateTimePicker from "react-datetime-picker";
 
-export default function CreateEmployeePage({ employees, setEmployees }) {
+import { useSelector, useDispatch } from "react-redux";
+import { setEmployees } from "../redux/reducers";
+
+export default function CreateEmployeePage() {
   const defaultNewEmployee = {
+    id: 1,
     firstName: "",
     lastName: "",
     startDate: "",
@@ -29,16 +33,21 @@ export default function CreateEmployeePage({ employees, setEmployees }) {
     state: "US",
     zipCode: "",
   };
+
+  const employees = useSelector((state) => state.employees.employees);
+  const dispatch = useDispatch();
+
   const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  console.log(JSON.parse(sessionStorage.getItem('employees')));
+  
   const onSubmit = (event) => {
     event.preventDefault();
 
     if (Object.keys(newEmployee).length > 0) {
-      const newList = employees;
       const newEmployeeData = {
-        id: employees.length,
+        id: employees.length+1,
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
         startDate: newEmployee.startDate,
@@ -49,10 +58,13 @@ export default function CreateEmployeePage({ employees, setEmployees }) {
         state: newEmployee.state,
         zipCode: newEmployee.zipCode,
       };
-      newList.push(newEmployeeData);
-      setEmployees(newList);
+      const data = [...employees, newEmployeeData];
+    
+      dispatch(setEmployees(data));
+
       setModalIsOpen(!modalIsOpen);
-      setNewEmployee(defaultNewEmployee);
+
+      sessionStorage.setItem("employees", JSON.stringify(data));
     }
   };
 
@@ -98,10 +110,10 @@ export default function CreateEmployeePage({ employees, setEmployees }) {
                 format="y-MM-dd"
                 disableClock={true}
                 value={newEmployee.dateOfBirth}
-                onChange={(event) =>
+                onChange={(value) =>
                   setNewEmployee({
                     ...newEmployee,
-                    dateOfBirth: event.target.value,
+                    dateOfBirth: new Date(value),
                   })
                 }
               />
@@ -113,10 +125,10 @@ export default function CreateEmployeePage({ employees, setEmployees }) {
                 disableClock={true}
                 maxDate={new Date()}
                 value={newEmployee.startDate}
-                onChange={(event) =>
+                onChange={(value) =>
                   setNewEmployee({
                     ...newEmployee,
-                    startDate: event.target.value,
+                    startDate: new Date(value),
                   })
                 }
               />
