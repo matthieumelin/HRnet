@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 // router
 import { Link } from "react-router-dom";
@@ -40,8 +39,6 @@ export default function CreateEmployeePage() {
   const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  console.log(JSON.parse(sessionStorage.getItem('employees')));
-  
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -241,7 +238,7 @@ export default function CreateEmployeePage() {
             borderRadius: 100,
           }}
           customMessage={{ textAlign: "center", width: "100%" }}
-          customContainer={{ position: "relative", height: 50, width: 400 }}
+          customModal={{ position: "relative", height: 50, width: 400 }}
           message={"Employee Created!"}
           isOpen={modalIsOpen}
           onConfirm={() => setModalIsOpen(!modalIsOpen)}
@@ -250,24 +247,6 @@ export default function CreateEmployeePage() {
     </StyledCreateEmployeePage>
   );
 }
-
-CreateEmployeePage.propTypes = {
-  employees: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      startDate: PropTypes.string,
-      department: PropTypes.string,
-      dateOfBirth: PropTypes.string,
-      street: PropTypes.string,
-      city: PropTypes.string,
-      state: PropTypes.string,
-      zipCode: PropTypes.string,
-    })
-  ),
-  setEmployees: PropTypes.func,
-};
 
 const StyledCreateEmployeePage = styled.div``;
 const Main = styled.main``;

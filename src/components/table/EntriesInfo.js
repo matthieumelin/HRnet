@@ -15,8 +15,8 @@ export default function EntriesInfo({
       ? 0
       : startIndex + 1
     : listLength === 0
-    ? 0
-    : startIndex + 1;
+      ? 0
+      : startIndex + 1;
   const amountOfEntries = isFiltered ? filteredListLength : listLength;
   const endIndexText =
     +startIndex + +maxEntriesAmount >= amountOfEntries
@@ -31,7 +31,7 @@ export default function EntriesInfo({
       </EntriesInfoSpan>
       {isFiltered && (
         <EntriesInfoSpan>
-          (filtered from {amountOfEntriesTotal} total entries
+          {` (filtered from ${amountOfEntriesTotal} total entries)`}
         </EntriesInfoSpan>
       )}
     </StyledEntriesInfo>
