@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 
-// router
 import { Link } from "react-router-dom";
 import { Router } from "../router/Routes";
 
-// modal
 import Modal from "@matthieumelin/mm-react-modal";
 
-// styled
 import styled from "styled-components";
 
-// data
 import { States } from "../data/States";
 import { Departments } from "../data/Departments";
 
@@ -18,6 +14,8 @@ import DateTimePicker from "react-datetime-picker";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setEmployees } from "../redux/reducers";
+
+import LogoImage from "../logo.png";
 
 export default function CreateEmployeePage() {
   const defaultNewEmployee = {
@@ -44,7 +42,7 @@ export default function CreateEmployeePage() {
 
     if (Object.keys(newEmployee).length > 0) {
       const newEmployeeData = {
-        id: employees.length+1,
+        id: employees.length + 1,
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
         startDate: newEmployee.startDate,
@@ -56,7 +54,7 @@ export default function CreateEmployeePage() {
         zipCode: newEmployee.zipCode,
       };
       const data = [...employees, newEmployeeData];
-    
+
       dispatch(setEmployees(data));
 
       setModalIsOpen(!modalIsOpen);
@@ -68,9 +66,10 @@ export default function CreateEmployeePage() {
   return (
     <StyledCreateEmployeePage>
       <Main>
-        <MainTitle>HRnet</MainTitle>
+        <Logo src={LogoImage} alt="Logo de Wealth Health" />
+        <Title>HRnet</Title>
         <Container>
-          <Link to={Router.CurrentEmployees}>View Current Employees</Link>
+          <ViewEmployees to={Router.CurrentEmployees}>View Current Employees</ViewEmployees>
           <SubTitle>Create Employee</SubTitle>
           <Form onSubmit={(event) => onSubmit(event)}>
             <FormGroup>
@@ -103,7 +102,7 @@ export default function CreateEmployeePage() {
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="date-of-birth">Date of Birth</FormLabel>
-              <DateTimePicker
+              <FormDateTime
                 format="y-MM-dd"
                 disableClock={true}
                 value={newEmployee.dateOfBirth}
@@ -117,7 +116,7 @@ export default function CreateEmployeePage() {
             </FormGroup>
             <FormGroup>
               <FormLabel htmlFor="start-date">Start Date</FormLabel>
-              <DateTimePicker
+              <FormDateTime
                 format="y-MM-dd"
                 disableClock={true}
                 maxDate={new Date()}
@@ -248,9 +247,23 @@ export default function CreateEmployeePage() {
   );
 }
 
-const StyledCreateEmployeePage = styled.div``;
-const Main = styled.main``;
-const MainTitle = styled.h1`
+const StyledCreateEmployeePage = styled.div`
+width:100vw;
+background: lightgray;
+`;
+const Main = styled.main`
+`;
+const Logo = styled.img`
+display:block;
+padding: 30px 0 0 0;
+margin: 0 auto;
+width: 200px;
+height: 200px;
+object-fit:cover;
+`;
+const Title = styled.h1`
+margin:0;
+padding:20px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,17 +274,60 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const SubTitle = styled.h2``;
+const ViewEmployees = styled(Link)`
+color:inherit;
+display:block;
+background-color: #677e11;
+color: #fff;
+margin: 10px 0 0 0;
+padding: 5px 10px;
+border-radius: 2px;
+text-decoration:none;
+transition:0.5s;
+
+&:hover {
+  background-color: #94ac1b;
+  transition: 0.5s;
+}
+`
+const SubTitle = styled.h2`
+`;
 const Form = styled.form``;
-const FormGroup = styled.div``;
+const FormGroup = styled.div`
+margin:20px 0;
+&:first-child {
+margin:0;
+}
+`;
 const FormLabel = styled.label`
   display: block;
-  margin-top: 1rem;
-  margin-bottom: 10px;
+  margin: 0 0 10px 0;
+  font-weight: 500;
 `;
-const FormInput = styled.input``;
-const FormFieldSet = styled.fieldset``;
-const FormFieldSetLegend = styled.legend``;
-const FormSelect = styled.select``;
+const FormDateTime = styled(DateTimePicker)`
+background-color:white;
+width:100%;
+`;
+const FormInput = styled.input`
+width:100%;
+padding:5px;
+outline:none;
+font-family: inherit;
+
+&::focus {
+  border:1px solid red;
+}
+`;
+const FormFieldSet = styled.fieldset`
+margin: 20px 0;
+`;
+const FormFieldSetLegend = styled.legend`
+`;
+const FormSelect = styled.select`
+padding: 6px 5px;
+font-family:inherit;
+outline:none;
+width:100%;
+`;
 const FormSelectOption = styled.option``;
 const Button = styled.button``;
