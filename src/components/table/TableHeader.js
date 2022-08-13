@@ -10,6 +10,8 @@ import {
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { Colors } from "../../utils/style/Colors";
+
 export default function TableHeader({ attributes, onUpdateSorting }) {
   const [sorter, setSorter] = useState("firstName");
   const [order, setOrder] = useState(true);
@@ -71,7 +73,8 @@ const StyledTableHeader = styled.thead``;
 const TableHeaderCell = styled.th`
   cursor: pointer;
   text-align: left;
-  color: ${(props) => (props.isSorter ? "grey" : "blue")};
+  color: ${(props) => (props.isSorter ? `${Colors.primary}` : "black")};
   border-bottom: 1px solid grey;
-`;
-const TableHeaderRow = styled.tr``;
+  `;
+  const TableHeaderRow = styled.tr`
+  `;

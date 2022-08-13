@@ -130,9 +130,19 @@ Table.defaultProps = {
   employees: [],
 };
 
-const StyledTable = styled.div``;
-const TableAside = styled.div``;
-const TableContainer = styled.table`
-overflow-x:auto;
+const StyledTable = styled.div`
+margin: 0 20px;
 `;
-const TableBody = styled.tbody``;
+const TableAside = styled.div`
+display:flex;
+justify-content: space-between;
+margin: 20px 0;
+`;
+const TableContainer = styled.table`
+background-color: white;
+overflow-x:auto;
+padding: 20px;
+border-radius: 2px;
+width:100%;
+`;
+const TableBody = styled.tbody``

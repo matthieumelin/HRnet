@@ -17,6 +17,8 @@ import { setEmployees } from "../redux/reducers";
 
 import LogoImage from "../logo.png";
 
+import { Colors } from "../utils/style/Colors";
+
 export default function CreateEmployeePage() {
   const defaultNewEmployee = {
     id: 1,
@@ -277,7 +279,7 @@ const Container = styled.div`
 const ViewEmployees = styled(Link)`
 color:inherit;
 display:block;
-background-color: #677e11;
+background-color: ${Colors.primary};
 color: #fff;
 margin: 10px 0 0 0;
 padding: 5px 10px;
@@ -286,7 +288,7 @@ text-decoration:none;
 transition:0.5s;
 
 &:hover {
-  background-color: #94ac1b;
+  background-color: ${Colors.secondary};
   transition: 0.5s;
 }
 `
@@ -313,13 +315,12 @@ width:100%;
 padding:5px;
 outline:none;
 font-family: inherit;
-
-&::focus {
-  border:1px solid red;
-}
+border-radius:2px;
+border:1px solid rgba(0, 0, 0, 0.5);
 `;
 const FormFieldSet = styled.fieldset`
 margin: 20px 0;
+
 `;
 const FormFieldSetLegend = styled.legend`
 `;
@@ -329,5 +330,19 @@ font-family:inherit;
 outline:none;
 width:100%;
 `;
-const FormSelectOption = styled.option``;
-const Button = styled.button``;
+const FormSelectOption = styled.option`
+`;
+const Button = styled.button`
+background-color: ${Colors.primary};
+border: none;
+border-radius: 2px;
+color: white;
+font-family: inherit;
+padding: 5px 20px;
+cursor: pointer;
+transition: 0.5s;
+&:hover {
+  background-color: ${Colors.secondary};
+  transition: 0.5s;
+}
+`;

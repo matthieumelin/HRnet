@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
+import { Colors } from "../../utils/style/Colors";
+
 const generatePageButtonList = (pageAmount, actualPage) => {
   if (pageAmount <= 5) {
     const res = [];
@@ -93,5 +95,21 @@ Pagination.defaultProp = {
   listLength: 0,
 };
 
-const StyledPagination = styled.div``;
-const PaginationButton = styled.button``;
+const StyledPagination = styled.div`
+display:flex;
+gap: 10px;
+`;
+const PaginationButton = styled.button`
+padding: 5px 10px;
+background-color: ${Colors.primary};
+color: white;
+border:none;
+border-radius: 2px;
+cursor:pointer;
+transition: 0.5s;
+
+&:hover {
+  transition: 0.5s;
+  background-color: ${Colors.secondary};
+}
+`;

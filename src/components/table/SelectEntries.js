@@ -43,5 +43,8 @@ const StyledSelectEntries = styled.div`
   gap: 5px;
 `;
 const SelectEntriesSpan = styled.span``;
-const SelectEntriesSelect = styled.select``;
+const SelectEntriesSelect = styled.select`
+outline:none;
+font-family:inherit;
+`;
 const SelectEntriesSelectOption = styled.option``;

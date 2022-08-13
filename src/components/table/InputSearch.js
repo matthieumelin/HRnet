@@ -38,4 +38,7 @@ const StyledInputSearch = styled.div``;
 const InputSearchLabel = styled.label`
   margin: 0 10px 0 0;
 `;
-const Input = styled.input``;
+const Input = styled.input`
+outline:none;
+font-family:inherit;
+`;

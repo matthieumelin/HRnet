@@ -8,6 +8,7 @@ import Table from "../components/Table";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Colors } from "../utils/style/Colors";
 
 export default function CurrentEmployeesPage() {
   return (
@@ -15,19 +16,33 @@ export default function CurrentEmployeesPage() {
       <Main>
         <MainTitle>Current Employees</MainTitle>
         <Table />
-        <NavLink to={Router.CreateEmployee}>
-          <FontAwesomeIcon icon={faHome} />
+        <HomeLink to={Router.CreateEmployee}>
+          <HomeLinkIcon icon={faHome} />
           Home
-        </NavLink>
+        </HomeLink>
       </Main>
     </StyledCurrentEmployees>
   );
 }
 
-const StyledCurrentEmployees = styled.div``;
+const StyledCurrentEmployees = styled.div`
+width: 100vw;
+height: 100vh;
+background-color: lightgray;
+`;
 const Main = styled.main``;
 const MainTitle = styled.h1`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+margin: 0;
+padding: 30px 0 0 0;
+text-align:center;
+`;
+const HomeLink = styled(NavLink)`
+text-decoration:none;
+text-align:center;
+display:block;
+margin: 0 auto;
+color: ${Colors.primary};
+`;
+const HomeLinkIcon = styled(FontAwesomeIcon)`
+margin: 0 5px 0 0;
 `;
