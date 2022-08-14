@@ -9,22 +9,26 @@ import CurrentEmployeesPage from "./pages/CurrentEmployeesPage";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
+import { HelmetProvider } from "react-helmet-async";
+
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={Router.CurrentEmployees}
-            element={<CurrentEmployeesPage />}
-          />
-          <Route
-            path={Router.CreateEmployee}
-            element={<CreateEmployeePage />}
-          />
-          <Route index element={<CreateEmployeePage />} />
-        </Routes>
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path={Router.CurrentEmployees}
+              element={<CurrentEmployeesPage />}
+            />
+            <Route
+              path={Router.CreateEmployee}
+              element={<CreateEmployeePage />}
+            />
+            <Route index element={<CreateEmployeePage />} />
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
     </Provider>
   );
 }

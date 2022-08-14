@@ -13,10 +13,10 @@ export default function EntriesInfo({
   const startIndexText = isFiltered
     ? filteredListLength === 0
       ? 0
-      : startIndex + 1
+      : startIndex+1
     : listLength === 0
       ? 0
-      : startIndex + 1;
+      : startIndex+1;
   const amountOfEntries = isFiltered ? filteredListLength : listLength;
   const endIndexText =
     +startIndex + +maxEntriesAmount >= amountOfEntries

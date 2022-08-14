@@ -29,23 +29,23 @@ export default function TableHeader({ attributes, onUpdateSorting }) {
 
   const children = attributes.length
     ? attributes.map((attribute) => (
-        <TableHeaderCell
-          isSorter={attributes.value === sorter ? true : false}
-          key={attribute.value}
-          onClick={() => handleSorterChange(attribute.value)}
-        >
-          {attribute.name}
-          {attribute.value === sorter ? (
-            order ? (
-              <FontAwesomeIcon icon={faSortDown} />
-            ) : (
-              <FontAwesomeIcon icon={faSortUp} />
-            )
+      <TableHeaderCell
+        isSorter={attribute.value === sorter ? true : false}
+        key={attribute.value}
+        onClick={() => handleSorterChange(attribute.value)}
+      >
+        {attribute.name}
+        {attribute.value === sorter ? (
+          order ? (
+            <TableHeaderCellArrow icon={faSortDown} />
           ) : (
-            <FontAwesomeIcon icon={faSort} />
-          )}
-        </TableHeaderCell>
-      ))
+            <TableHeaderCellArrow icon={faSortUp} />
+          )
+        ) : (
+          <TableHeaderCellArrow icon={faSort} />
+        )}
+      </TableHeaderCell>
+    ))
     : [];
 
   return (
@@ -73,8 +73,11 @@ const StyledTableHeader = styled.thead``;
 const TableHeaderCell = styled.th`
   cursor: pointer;
   text-align: left;
-  color: ${(props) => (props.isSorter ? `${Colors.primary}` : "black")};
   border-bottom: 1px solid grey;
+  color: ${(props) => props.isSorter ? `${Colors.primary}` : "black"};
   `;
-  const TableHeaderRow = styled.tr`
+const TableHeaderCellArrow = styled(FontAwesomeIcon)`
+margin: 0 0 0 10px;
+`;
+const TableHeaderRow = styled.tr`
   `;

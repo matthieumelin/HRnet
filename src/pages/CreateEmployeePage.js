@@ -19,9 +19,10 @@ import LogoImage from "../logo.png";
 
 import { Colors } from "../utils/style/Colors";
 
+import { Helmet } from "react-helmet-async";
+
 export default function CreateEmployeePage() {
   const defaultNewEmployee = {
-    id: 1,
     firstName: "",
     lastName: "",
     startDate: "",
@@ -42,7 +43,11 @@ export default function CreateEmployeePage() {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (Object.keys(newEmployee).length > 0) {
+    const allIsFilled = Object.values(newEmployee).every(
+      value => value !== ""
+    );
+
+    if (allIsFilled) {
       const newEmployeeData = {
         id: employees.length + 1,
         firstName: newEmployee.firstName,
@@ -62,11 +67,17 @@ export default function CreateEmployeePage() {
       setModalIsOpen(!modalIsOpen);
 
       sessionStorage.setItem("employees", JSON.stringify(data));
+
+      console.log("OK")
     }
   };
 
   return (
     <StyledCreateEmployeePage>
+      <Helmet>
+        <title>HRNet - Create employee</title>
+      </Helmet>
+
       <Main>
         <Logo src={LogoImage} alt="Logo de Wealth Health" />
         <Title>HRnet</Title>

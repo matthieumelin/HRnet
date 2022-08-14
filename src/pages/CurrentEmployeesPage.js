@@ -8,11 +8,18 @@ import Table from "../components/Table";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 import { Colors } from "../utils/style/Colors";
+
+import { Helmet } from "react-helmet-async";
 
 export default function CurrentEmployeesPage() {
   return (
     <StyledCurrentEmployees>
+      <Helmet>
+        <title>HRNet - Current employees</title>
+      </Helmet>
+
       <Main>
         <MainTitle>Current Employees</MainTitle>
         <Table />
