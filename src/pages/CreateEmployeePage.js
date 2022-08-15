@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Router } from "../router/Routes";
 
-import Modal from "@matthieumelin/mm-react-modal";
-
 import styled from "styled-components";
 
 import { States } from "../data/States";
@@ -19,9 +17,14 @@ import LogoImage from "../logo.png";
 
 import { Colors } from "../utils/style/Colors";
 
+import { Helmet } from "react-helmet-async";
+
+import Moment from 'moment';
+
+const Modal = React.lazy(() => import("@matthieumelin/mm-react-modal"));
+
 export default function CreateEmployeePage() {
   const defaultNewEmployee = {
-    id: 1,
     firstName: "",
     lastName: "",
     startDate: "",
@@ -38,18 +41,21 @@ export default function CreateEmployeePage() {
 
   const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
+  
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (Object.keys(newEmployee).length > 0) {
+    const allIsFilled = Object.values(newEmployee).every(
+      (value) => value !== ""
+    );
+
+    if (allIsFilled) {
       const newEmployeeData = {
-        id: employees.length + 1,
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
-        startDate: newEmployee.startDate,
+        startDate: Moment(newEmployee.startDate).format('YYYY/MM/DD'),
         department: newEmployee.department,
-        dateOfBirth: newEmployee.dateOfBirth,
+        dateOfBirth: Moment(newEmployee.dateOfBirth).format('YYYY/MM/DD'),
         street: newEmployee.street,
         city: newEmployee.city,
         state: newEmployee.state,
@@ -67,11 +73,17 @@ export default function CreateEmployeePage() {
 
   return (
     <StyledCreateEmployeePage>
+      <Helmet>
+        <title>HRNet - Create employee</title>
+      </Helmet>
+
       <Main>
         <Logo src={LogoImage} alt="Logo de Wealth Health" />
         <Title>HRnet</Title>
         <Container>
-          <ViewEmployees to={Router.CurrentEmployees}>View Current Employees</ViewEmployees>
+          <ViewEmployees to={Router.CurrentEmployees}>
+            View Current Employees
+          </ViewEmployees>
           <SubTitle>Create Employee</SubTitle>
           <Form onSubmit={(event) => onSubmit(event)}>
             <FormGroup>
@@ -108,12 +120,12 @@ export default function CreateEmployeePage() {
                 format="y-MM-dd"
                 disableClock={true}
                 value={newEmployee.dateOfBirth}
-                onChange={(value) =>
+                onChange={(value) => {
                   setNewEmployee({
                     ...newEmployee,
-                    dateOfBirth: new Date(value),
-                  })
-                }
+                    dateOfBirth: value,
+                  });
+                }}
               />
             </FormGroup>
             <FormGroup>
@@ -126,7 +138,7 @@ export default function CreateEmployeePage() {
                 onChange={(value) =>
                   setNewEmployee({
                     ...newEmployee,
-                    startDate: new Date(value),
+                    startDate: value,
                   })
                 }
               />
@@ -226,21 +238,6 @@ export default function CreateEmployeePage() {
           </Form>
         </Container>
         <Modal
-          customCloseButton={{
-            position: "absolute",
-            right: -10,
-            top: -10,
-            width: 15,
-            height: 15,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 15,
-            borderRadius: 100,
-          }}
-          customMessage={{ textAlign: "center", width: "100%" }}
-          customContainer={{position: "relative", height: "100vh", width: "100vw"}}
-          customModal={{ position: "absolute", left: "50%", right:"50%", height: 50, width: 400 }}
           message={"Employee Created!"}
           isOpen={modalIsOpen}
           onConfirm={() => setModalIsOpen(!modalIsOpen)}
@@ -251,22 +248,21 @@ export default function CreateEmployeePage() {
 }
 
 const StyledCreateEmployeePage = styled.div`
-width:100vw;
-background: lightgray;
+  width: 100vw;
+  background: lightgray;
 `;
-const Main = styled.main`
-`;
+const Main = styled.main``;
 const Logo = styled.img`
-display:block;
-padding: 30px 0 0 0;
-margin: 0 auto;
-width: 200px;
-height: 200px;
-object-fit:cover;
+  display: block;
+  padding: 30px 0 0 0;
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 `;
 const Title = styled.h1`
-margin:0;
-padding:20px 0 0 0;
+  margin: 0;
+  padding: 20px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,29 +274,28 @@ const Container = styled.div`
   justify-content: center;
 `;
 const ViewEmployees = styled(Link)`
-color:inherit;
-display:block;
-background-color: ${Colors.primary};
-color: #fff;
-margin: 10px 0 0 0;
-padding: 5px 10px;
-border-radius: 2px;
-text-decoration:none;
-transition:0.5s;
-
-&:hover {
-  background-color: ${Colors.secondary};
+  color: inherit;
+  display: block;
+  background-color: ${Colors.primary};
+  color: #fff;
+  margin: 10px 0 0 0;
+  padding: 5px 10px;
+  border-radius: 2px;
+  text-decoration: none;
   transition: 0.5s;
-}
-`
-const SubTitle = styled.h2`
+
+  &:hover {
+    background-color: ${Colors.secondary};
+    transition: 0.5s;
+  }
 `;
+const SubTitle = styled.h2``;
 const Form = styled.form``;
 const FormGroup = styled.div`
-margin:20px 0;
-&:first-child {
-margin:0;
-}
+  margin: 20px 0;
+  &:first-child {
+    margin: 0;
+  }
 `;
 const FormLabel = styled.label`
   display: block;
@@ -308,42 +303,39 @@ const FormLabel = styled.label`
   font-weight: 500;
 `;
 const FormDateTime = styled(DateTimePicker)`
-background-color:white;
-width:100%;
+  background-color: white;
+  width: 100%;
 `;
 const FormInput = styled.input`
-width:100%;
-padding:5px;
-outline:none;
-font-family: inherit;
-border-radius:2px;
-border:1px solid rgba(0, 0, 0, 0.5);
+  width: 100%;
+  padding: 5px;
+  outline: none;
+  font-family: inherit;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 `;
 const FormFieldSet = styled.fieldset`
-margin: 20px 0;
-
+  margin: 20px 0;
 `;
-const FormFieldSetLegend = styled.legend`
-`;
+const FormFieldSetLegend = styled.legend``;
 const FormSelect = styled.select`
-padding: 6px 5px;
-font-family:inherit;
-outline:none;
-width:100%;
+  padding: 6px 5px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
 `;
-const FormSelectOption = styled.option`
-`;
+const FormSelectOption = styled.option``;
 const Button = styled.button`
-background-color: ${Colors.primary};
-border: none;
-border-radius: 2px;
-color: white;
-font-family: inherit;
-padding: 5px 20px;
-cursor: pointer;
-transition: 0.5s;
-&:hover {
-  background-color: ${Colors.secondary};
+  background-color: ${Colors.primary};
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-family: inherit;
+  padding: 5px 20px;
+  cursor: pointer;
   transition: 0.5s;
-}
+  &:hover {
+    background-color: ${Colors.secondary};
+    transition: 0.5s;
+  }
 `;

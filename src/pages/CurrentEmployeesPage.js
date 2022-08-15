@@ -2,9 +2,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Router } from "../router/Routes";
 
+import { Helmet } from "react-helmet-async";
+
 import styled from "styled-components";
 
-import Table from "@matthieumelin/mm-react-table";
+import { employeeAttributes } from "../data/EmployeeAttributes";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
@@ -13,13 +15,17 @@ import { Colors } from "../utils/style/Colors";
 
 import { useSelector } from "react-redux";
 
-import { employeeAttributes } from "../data/EmployeeAttributes";
+const Table = React.lazy(() => import('@matthieumelin/mm-react-table'));
 
 export default function CurrentEmployeesPage() {
   const employees = useSelector((state) => state.employees.employees);
 
   return (
     <StyledCurrentEmployees>
+      <Helmet>
+        <title>HRNet - Current employees</title>
+      </Helmet>
+
       <Main>
         <MainTitle>Current Employees</MainTitle>
         <Table datas={employees} attributes={employeeAttributes} />
