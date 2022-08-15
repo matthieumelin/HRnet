@@ -239,7 +239,8 @@ export default function CreateEmployeePage() {
             borderRadius: 100,
           }}
           customMessage={{ textAlign: "center", width: "100%" }}
-          customModal={{ position: "relative", height: 50, width: 400 }}
+          customContainer={{position: "relative", height: "100vh", width: "100vw"}}
+          customModal={{ position: "absolute", left: "50%", right:"50%", height: 50, width: 400 }}
           message={"Employee Created!"}
           isOpen={modalIsOpen}
           onConfirm={() => setModalIsOpen(!modalIsOpen)}

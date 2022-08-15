@@ -7,6 +7,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@matthieumelin/mm-react-modal": "^2.7.0",
+        "@matthieumelin/mm-react-table": "^2.4.0",
         "@reduxjs/toolkit": "^1.8.4",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.3.0",
@@ -23,7 +24,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
