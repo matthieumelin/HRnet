@@ -15,6 +15,9 @@ const config = {
     path: path.resolve(__dirname, './dist'),
     publicPath: './',
   },
+  performance: {
+    hints: false,
+  },
   devServer: {
     port: 3000,
     historyApiFallback: true,
@@ -25,6 +28,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      favicon: "./public/favicon.ico"
     }),
     new MiniCssExtractPlugin({
       runtime: false,
@@ -50,12 +54,12 @@ const config = {
       },
     ],
   },
+  devtool: "source-map"
 };
 
 module.exports = () => {
   if (isProduction) {
     config.mode = "production";
-
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   } else {
     config.mode = "development";
