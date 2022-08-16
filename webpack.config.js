@@ -1,49 +1,54 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
   entry: "./src/index.js",
   output: {
-    filename: "bundle.[hash].js",
+    chunkFilename: 'scripts/[name].[fullhash:8].bundle.js',
+    filename: 'scripts/[name].[fullhash:8].bundle.js',
+    path: path.resolve(__dirname, './dist'),
+    publicPath: './',
   },
   devServer: {
-    port: 3030,
+    port: 3000,
+    historyApiFallback: true,
     static: {
-      directory: path.join(__dirname, 'dist'),
-    }
+      directory: path.join(__dirname, "public"),
+    },
   },
   plugins: [
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     new HtmlWebpackPlugin({
-      template: "public/index.html",
-      favicon: "public/favicon.ico",
+      template: "./public/index.html",
     }),
+    new MiniCssExtractPlugin({
+      runtime: false,
+    }),
+    new CompressionWebpackPlugin()
   ],
   module: {
-    // exclude node_modules
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.(svg|png)$/,
         use: "file-loader",
       },
     ],
-  },
-  resolve: {
-    extensions: ["*", ".js", ".jsx"],
   },
 };
 

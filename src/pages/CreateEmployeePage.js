@@ -21,7 +21,7 @@ import { Helmet } from "react-helmet-async";
 
 import Moment from 'moment';
 
-const Modal = React.lazy(() => import("@matthieumelin/mm-react-modal"));
+import Modal from "@matthieumelin/mm-react-modal";
 
 export default function CreateEmployeePage() {
   const defaultNewEmployee = {

@@ -15,7 +15,7 @@ import { Colors } from "../utils/style/Colors";
 
 import { useSelector } from "react-redux";
 
-const Table = React.lazy(() => import('@matthieumelin/mm-react-table'));
+import Table from '@matthieumelin/mm-react-table';
 
 export default function CurrentEmployeesPage() {
   const employees = useSelector((state) => state.employees.employees);
