@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Router } from "./router/Routes";
 
 import { Provider } from "react-redux";
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <HelmetProvider>
-        <HashRouter>
+        <BrowserRouter>
           <Routes>
             <Route
               path={Router.CurrentEmployees}
@@ -26,8 +26,9 @@ export default function App() {
               element={<CreateEmployeePage />}
             />
             <Route index element={<CreateEmployeePage />} />
+            <Route path="*" element={<CreateEmployeePage />} />
           </Routes>
-        </HashRouter>
+        </BrowserRouter>
       </HelmetProvider>
     </Provider>
   );

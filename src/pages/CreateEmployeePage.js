@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { States } from "../data/States";
 import { Departments } from "../data/Departments";
 
+import Select from "react-select";
 import DateTimePicker from "react-datetime-picker";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +20,7 @@ import { Colors } from "../utils/style/Colors";
 
 import { Helmet } from "react-helmet-async";
 
-import Moment from 'moment';
+import Moment from "moment";
 
 import Modal from "@matthieumelin/mm-react-modal";
 
@@ -41,7 +42,7 @@ export default function CreateEmployeePage() {
 
   const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -53,9 +54,9 @@ export default function CreateEmployeePage() {
       const newEmployeeData = {
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
-        startDate: Moment(newEmployee.startDate).format('YYYY/MM/DD'),
+        startDate: Moment(newEmployee.startDate).format("YYYY/MM/DD"),
         department: newEmployee.department,
-        dateOfBirth: Moment(newEmployee.dateOfBirth).format('YYYY/MM/DD'),
+        dateOfBirth: Moment(newEmployee.dateOfBirth).format("YYYY/MM/DD"),
         street: newEmployee.street,
         city: newEmployee.city,
         state: newEmployee.state,
@@ -66,6 +67,7 @@ export default function CreateEmployeePage() {
       dispatch(setEmployees(data));
 
       setModalIsOpen(!modalIsOpen);
+      setNewEmployee(defaultNewEmployee);
 
       sessionStorage.setItem("employees", JSON.stringify(data));
     }
@@ -176,24 +178,20 @@ export default function CreateEmployeePage() {
                 </FormGroup>
                 <FormGroup>
                   <FormLabel htmlFor="state">State</FormLabel>
-                  <FormSelect
+                  <Select
                     id="state"
+                    menuPlacement="top"
+                    isClearable={true}
+                    defaultInputValue={States[0].label}
                     value={newEmployee.state}
-                    onChange={(event) =>
+                    options={States}
+                    onChange={(value) =>
                       setNewEmployee({
                         ...newEmployee,
-                        city: event.target.value,
+                        state: value.value,
                       })
                     }
-                  >
-                    {States.map((state, key) => {
-                      return (
-                        <FormSelectOption key={key}>
-                          {state.name}
-                        </FormSelectOption>
-                      );
-                    })}
-                  </FormSelect>
+                  />
                 </FormGroup>
                 <FormGroup>
                   <FormLabel htmlFor="zip-code">Zip Code</FormLabel>
@@ -212,24 +210,20 @@ export default function CreateEmployeePage() {
               </FormFieldSet>
               <FormGroup>
                 <FormLabel htmlFor="department">Department</FormLabel>
-                <FormSelect
-                  id="department"
+                <Select
+                  id="state"
+                  menuPlacement="top"
+                  isClearable={true}
+                  defaultInputValue={Departments[0].label}
                   value={newEmployee.department}
-                  onChange={(event) =>
+                  options={Departments}
+                  onChange={(value) =>
                     setNewEmployee({
                       ...newEmployee,
-                      department: event.target.value,
+                      department: value,
                     })
                   }
-                >
-                  {Departments.map((department, key) => {
-                    return (
-                      <FormSelectOption key={key}>
-                        {department}
-                      </FormSelectOption>
-                    );
-                  })}
-                </FormSelect>
+                />
               </FormGroup>
             </FormGroup>
             <FormGroup>

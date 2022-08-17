@@ -21,9 +21,6 @@ const config = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
-    static: {
-      directory: path.join(__dirname, "public"),
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({
