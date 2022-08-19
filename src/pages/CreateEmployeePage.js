@@ -64,11 +64,11 @@ export default function CreateEmployeePage() {
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
         startDate: Moment(newEmployee.startDate).format("YYYY/MM/DD"),
-        department: department,
+        department: department.value,
         dateOfBirth: Moment(newEmployee.dateOfBirth).format("YYYY/MM/DD"),
         street: newEmployee.street,
         city: newEmployee.city,
-        state: state,
+        state: state.value,
         zipCode: newEmployee.zipCode,
       };
       const data = [...employees, newEmployeeData];

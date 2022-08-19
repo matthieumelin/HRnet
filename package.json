@@ -7,7 +7,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@matthieumelin/mm-react-modal": "^2.7.0",
-        "@matthieumelin/mm-react-table": "^2.9.0",
+        "@matthieumelin/mm-react-table": "^3.3.0",
         "@reduxjs/toolkit": "^1.8.4",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.3.0",
