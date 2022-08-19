@@ -29,11 +29,9 @@ export default function CreateEmployeePage() {
     firstName: "",
     lastName: "",
     startDate: "",
-    department: "Sales",
     dateOfBirth: "",
     street: "",
     city: "",
-    state: "US",
     zipCode: "",
   };
 
@@ -42,6 +40,17 @@ export default function CreateEmployeePage() {
 
   const [newEmployee, setNewEmployee] = useState(defaultNewEmployee);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [department, setDepartment] = useState("Sales");
+  const [state, setState] = useState("US");
+
+  const handleChangeState = (selectedOption) => {
+    setState(selectedOption);
+  };
+
+  const handleChangeDepartment = (selectedOption) => {
+    setDepartment(selectedOption);
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -55,11 +64,11 @@ export default function CreateEmployeePage() {
         firstName: newEmployee.firstName,
         lastName: newEmployee.lastName,
         startDate: Moment(newEmployee.startDate).format("YYYY/MM/DD"),
-        department: newEmployee.department,
+        department: department,
         dateOfBirth: Moment(newEmployee.dateOfBirth).format("YYYY/MM/DD"),
         street: newEmployee.street,
         city: newEmployee.city,
-        state: newEmployee.state,
+        state: state,
         zipCode: newEmployee.zipCode,
       };
       const data = [...employees, newEmployeeData];
@@ -183,14 +192,9 @@ export default function CreateEmployeePage() {
                     menuPlacement="top"
                     isClearable={true}
                     defaultInputValue={States[0].label}
-                    value={newEmployee.state}
+                    value={state}
                     options={States}
-                    onChange={(value) =>
-                      setNewEmployee({
-                        ...newEmployee,
-                        state: value.value,
-                      })
-                    }
+                    onChange={handleChangeState}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -211,18 +215,13 @@ export default function CreateEmployeePage() {
               <FormGroup>
                 <FormLabel htmlFor="department">Department</FormLabel>
                 <Select
-                  id="state"
+                  id="department"
                   menuPlacement="top"
                   isClearable={true}
                   defaultInputValue={Departments[0].label}
-                  value={newEmployee.department}
+                  value={department}
                   options={Departments}
-                  onChange={(value) =>
-                    setNewEmployee({
-                      ...newEmployee,
-                      department: value,
-                    })
-                  }
+                  onChange={handleChangeDepartment}
                 />
               </FormGroup>
             </FormGroup>
